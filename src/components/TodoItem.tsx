@@ -6,10 +6,11 @@ const {Meta} = Card;
 
 interface ITodoItem extends ITodo {
     handlePointerDown: (event: React.PointerEvent<HTMLDivElement>, item: ITodo, status: string) => void;
+    removeTodo: (id: string) => void;
 }
 
 const TodoItem: React.FC<ITodoItem> = (props) => {
-    const {id, title, handlePointerDown} = props;
+    const {id, title, handlePointerDown, removeTodo} = props;
     return <div>
             <Card
                 key={id}
@@ -21,7 +22,7 @@ const TodoItem: React.FC<ITodoItem> = (props) => {
                 >
                 <div className="flex justify-between items-center">
                     <h4>{title}</h4>
-                    <Button type="text" icon={<DeleteOutlined style={{color: "red"}} />} />
+                    <Button type="text" onClick={()=>removeTodo(id)} icon={<DeleteOutlined style={{color: "red"}} />} />
                 </div>
             </Card>
     </div>
