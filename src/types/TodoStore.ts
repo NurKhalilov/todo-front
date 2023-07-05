@@ -17,6 +17,7 @@ export interface ICard {
 
 class TodoStore {
   todos: ITodo[] = [];
+  draggedItem: ITodo | null = null;
   cards: ICard[] = [
     { title: 'Backlog', status: 'backlog', value: '' },
   { title: 'To Do', status: 'to-do', value: '' },
@@ -27,6 +28,15 @@ class TodoStore {
   constructor() {
     makeAutoObservable(this);
   }
+
+  handleChange = (index: number, value: string) => {
+    todoStore.cards = todoStore.cards.map((card, i) => {
+      if (i === index) {
+        return { ...card, value };
+      }
+      return card;
+    });
+  };
 
   addTodo = (status: string, value: string) => {
     if (value) {
@@ -45,6 +55,10 @@ class TodoStore {
         return card;
       });
     }
+  };
+  
+  removeTodo = (id: string): void => {
+    this.todos = this.todos.filter(todo => todo.id !== id)
   };
 }
 

@@ -1,10 +1,9 @@
-import {useState} from 'react';
-import { ITodo } from '../types/data';
-import { TodoList } from './TodoList';
-import {nanoid} from 'nanoid';
+// import { TodoList } from './TodoList';
+import { TestList } from "./TestList"
+
 
 const App: React.FC = () => {
-    return <TodoList />
+    return <TestList />
 }
 
 export {App}
