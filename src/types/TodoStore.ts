@@ -1,7 +1,7 @@
 import { makeAutoObservable, observable, action } from "mobx";
 import { nanoid } from "nanoid";
 import axios from 'axios';
-
+import { io } from "socket.io-client";
 
 class Todo {
   id: string;
@@ -26,6 +26,8 @@ export interface ICard {
   value: string;
 }
 
+const socket = io('http://127.0.0.1:5000')
+
 class TodoStore {
   todos: Todo[] = [];
   draggedItem: Todo | null = null;
@@ -41,8 +43,16 @@ class TodoStore {
       todos: observable,
       fetchData: action.bound,
     });
+    this.subscribeToTasks()
   }
 
+  subscribeToTasks() {
+    socket.on("tasks_list", (data: any) => {
+      this.todos = data.data;
+    });
+
+    socket.emit("tasks:subscribe")
+  }
   
   handleChange = (index: number, value: string) => {
     todoStore.cards = todoStore.cards.map((card, i) => {
@@ -64,8 +74,13 @@ class TodoStore {
       }
       this.todos.push(data);
 
-      axios.post("http://127.0.0.1:5000/todos", data)
-      .then(res => console.log(res.data))
+      socket.emit("add_task", data, {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+
+      socket.emit('tasks:subscribe');
 
       this.cards = this.cards.map((card) => {
         if (card.status === status) {

@@ -2,18 +2,12 @@ import { TodoItem } from "./TodoItem";
 import { Card, Row, Col, Button, Input } from 'antd';
 import { observer } from "mobx-react";
 import todoStore from "../types/TodoStore";
-import { ITodo } from "../types/data";
+import { io, Socket } from 'socket.io-client';
 import { useEffect } from "react";
 
+const socket: Socket = io('http://localhost:5000');
 
 const TestList: React.FC = observer(() => {
-
-
-    useEffect(() => {
-      todoStore.fetchData();
-    }, []);
-
-
 
 
     return <div onPointerMove={todoStore.handlePointerMove}>
