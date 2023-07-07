@@ -1,6 +1,5 @@
-import { makeAutoObservable, observable, action } from "mobx";
+import { makeAutoObservable, observable } from "mobx";
 import { nanoid } from "nanoid";
-import axios from 'axios';
 import { io } from "socket.io-client";
 
 class Todo {
@@ -41,7 +40,6 @@ class TodoStore {
   constructor() {
     makeAutoObservable(this, {
       todos: observable,
-      fetchData: action.bound,
     });
     this.subscribeToTasks()
   }
@@ -130,15 +128,7 @@ class TodoStore {
     }
   };
 
-  fetchData = async () => {
-    try {
-      const response = await axios.get("http://127.0.0.1:5000/todos");
-      this.todos = response.data.data;
-      console.log(this.todos);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+
 
   
   removeTodo = (id: string): void => {
