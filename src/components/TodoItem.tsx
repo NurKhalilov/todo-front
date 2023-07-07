@@ -1,8 +1,7 @@
 import { ITodo } from "../types/data";
-import { Card, Row, Col, Avatar, Button } from 'antd';
+import { Card, Button } from 'antd';
 import { DeleteOutlined } from "@ant-design/icons";
 
-const {Meta} = Card;
 
 interface ITodoItem extends ITodo {
     handlePointerDown: (event: React.PointerEvent<HTMLDivElement>, item: ITodo, status: string) => void;

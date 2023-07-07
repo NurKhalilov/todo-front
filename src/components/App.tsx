@@ -1,11 +1,11 @@
-// import { TodoList } from './TodoList';
-import { TestList } from "./TestList"
+import { TodoList } from './TodoList';
+
 
 
 
 const App: React.FC = () => {
 
-    return <TestList />
+    return <TodoList />
 }
 
 export {App}

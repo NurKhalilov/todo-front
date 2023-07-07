@@ -115,16 +115,14 @@ class TodoStore {
       });
       todoStore.todos = updatedItems;
       if(todoStore.draggedItem!.id !== null) {
-        try {
-          await axios.put(`http://127.0.0.1:5000/todos/${todoStore.draggedItem!.id}`, { status })
-          .then(res => console.log(res.data));
-          // Assuming your API endpoint for updating a todo item is '/todos/:id'
-          // Replace it with the actual endpoint in your API
-          console.log('Todo item status updated successfully.');
-        } catch (error) {
-          console.error('Error updating todo item status:', error);
-          // Handle error case
-        }
+
+        socket.emit("update_task", {id: todoStore.draggedItem!.id, status: status}, {
+          headers: {
+            "Content-Type": "application/json"
+          }
+        });
+    
+          socket.emit('tasks:subscribe');
       }
       todoStore.draggedItem = null;
 
@@ -144,7 +142,12 @@ class TodoStore {
 
   
   removeTodo = (id: string): void => {
-    this.todos = this.todos.filter(todo => todo.id !== id)
+    this.todos = this.todos.filter(todo => todo.id !== id);
+    socket.emit("delete_task", {id: id}, {headers: {
+      "Content-Type": "application/json"
+    }});
+
+    socket.emit('tasks:subscribe');
   };
 }
 
