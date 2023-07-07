@@ -1,4 +1,3 @@
-import { makeAutoObservable } from "mobx";
 
 export interface ITodo {
     id: string, 

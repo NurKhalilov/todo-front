@@ -26,7 +26,7 @@ const TodoList: React.FC = observer(() => {
           <Col span={4} key={card.status}>
             <Card
               title={card.title}
-              className="card bg-sky-500"
+              className="card bg-blue-300 border-blue-700"
               onPointerUp={(event) => todoStore.handlePointerUp(event, card.status)}
             >
               {todoStore.todos
@@ -40,7 +40,7 @@ const TodoList: React.FC = observer(() => {
                 className='mt-2'
                 placeholder='Write a task'
                 value={card.value} />
-              <Button type="primary" className="bg-blue-500 hover:bg-blue-700 text-white font-bold mt-2 rounded" onClick={()=>todoStore.addTodo(card.status, card.value)}>Add task</Button>
+              <Button type="ghost" className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold mt-2 rounded" onClick={()=>todoStore.addTodo(card.status, card.value)}>Add task</Button>
               
             </Card>
           </Col>
